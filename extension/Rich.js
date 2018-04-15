@@ -1,20 +1,51 @@
+
+function readTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+            callback(rawFile.responseText);
+        }
+    }
+    rawFile.send(null);
+}
 function setStatus(tabId, changeInfo, tab) {
-    if (tab.active === true && ! (tab.url == undefined)) {
-            var url = new URL(tab.url);
+    if (tab.active === true && !(tab.url == undefined)) {
+        var url = new URL(tab.url);
 
-            var data = {
-                url: tab.url,
-                details: url.hostname,
-                state: tab.title,
-                smallText: tab.title,
-                largeText: tab.url
-            };
+        readTextFile("./blacklist.json", function (text) {
+            var data = JSON.parse(text);
+            if  (text.indexOf(url.hostname) > -1) {
+                var data = {
+                    url: "Unavailable",
+                    details: "Unavailable",
+                    state: "Unavailable",
+                    smallText: "Unavailable",
+                    largeText: "Unavailable"
+                };
 
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "http://127.0.0.1:3000/", true);
-            xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.send(JSON.stringify(data));
-            console.log(data);
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("POST", "http://127.0.0.1:3000/", true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+                xhttp.send(JSON.stringify(data));
+                console.log(data);
+            } else {
+                var data = {
+                    url: tab.url,
+                    details: url.hostname,
+                    state: tab.title,
+                    smallText: tab.title,
+                    largeText: tab.url
+                };
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("POST", "http://127.0.0.1:3000/", true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+                xhttp.send(JSON.stringify(data));
+                console.log(data);
+            }
+        });
     }
 }
 
@@ -22,14 +53,6 @@ function setStatus(tabId, changeInfo, tab) {
 
 console = chrome.extension.getBackgroundPage().console;
 
-console.log("carregou toperson");
 
+// Eventos;
 chrome.tabs.onUpdated.addListener(setStatus);
-
-//setInterval(() => {
-//  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-      //  var url = tabs[0].url;     //url
-    //   var title = tabs[0].title;   //title
-  //     setStatus({type: "youtube", title, url});
- //});
-//}, 3000);

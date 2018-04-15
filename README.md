@@ -9,3 +9,11 @@ a simple fork of https://github.com/jczstudios/discord-chrome-presence
  3. Install extension on chrome, *just open chrome://extensions and go "Load unpacked extension" and select manifest.json or Rich.js*
  4. Run in project folder `node index.js` 
  5. Enjoy.
+
+# Blacklist
+
+To add a website to the blacklist, go to `blacklist.json` and in blacklist array add the website domain, ex: www.youtube.com, github.com
+
+Adding the website to blacklist, everytime you open that website, the rpc gonna show *Unavailable*
+
+Warning: some of websites uses www
