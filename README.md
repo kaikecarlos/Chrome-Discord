@@ -18,3 +18,8 @@ To add a website to the blacklist, go to `blacklist.json` and in blacklist array
 Adding the website to blacklist, everytime you open that website, the rpc gonna show *Unavailable*
 
 Warning: some of websites uses www
+
+# Issues
+
+If you have had an error related to GIT
+Just install this https://git-scm.com/
