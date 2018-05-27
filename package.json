@@ -1,15 +1,18 @@
 {
-  "name": "watching-discord",
+  "name": "chrome-discord",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron index.js",
   },
   "author": "KaikeCarlos",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "discord-rich-presence": "0.0.6",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+  },
+  "devDependencies": {
+    "electron": "^2.0.2"
   }
 }

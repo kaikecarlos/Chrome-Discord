@@ -1,24 +1,35 @@
 const port = 3000;
-
-
-
-
 const express = require('express');
-const app = express();
+const appE = express();
+const config = require('./config.json')
+const client = require('discord-rich-presence')(config.client_id);
+
+//Electron boiii
+const {app, Menu, Tray} = require('electron');
+
+app.on('ready', () => {
+  tray = new Tray('./extension/assets/discord-logo.png');
+  const contextMenu = Menu.buildFromTemplate([
+    {label: `Chrome-Discord version ${config.version}`, type: 'normal'},
+    {label: 'Quit', type: 'normal', role: "quit"}
+    
+  ]);
+  tray.setToolTip('Chrome for Discord');
+  tray.setContextMenu(contextMenu);
+});
 
 
-const client = require('discord-rich-presence')('435082014065164298');
 
 
-app.use(express.json());
+appE.use(express.json());
 
-app.use(function(req, res, next) {
+appE.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
-app.post("/", (request, response) => {
+appE.post("/", (request, response) => {
     let body = request.body;
     let presence = {
       state: body.state.substring(0, 128),
@@ -33,4 +44,4 @@ app.post("/", (request, response) => {
     
 });
 
-app.listen(port, () => console.log(`Web server started! (${port})`));
+appE.listen(port, () => console.log(`Web server started! (${port})`));
