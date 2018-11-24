@@ -1,6 +1,5 @@
 # Chrome-Discord
-a simple fork of https://github.com/jczstudios/discord-chrome-presence
-
+it's not a fork lmao
 
  # How to install
 
